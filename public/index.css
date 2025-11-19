@@ -1,0 +1,170 @@
+/* ===== Your original base ===== */
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap");
+
+:root { --text-color: #fff; }
+
+body {
+  font-family: "Roboto", Arial, Helvetica, sans-serif;
+  margin: 0;
+  background: #111;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.flex-center { display: flex; justify-content: center; }
+
+.header-center {
+  align-items: center;
+  flex-direction: column;
+  margin-top: 10%;
+}
+
+.left-margin { margin: 0px 16px; }
+
+#sj-frame {
+  border: none;
+  position: absolute;
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  background-color: #111;
+}
+
+#sj-error { color: #ff6666 !important; white-space: pre-wrap; }
+
+#sj-error-code {
+  font-size: 12px;
+  color: #fff;
+  font-family: "Courier New", Courier, monospace;
+}
+
+.logo { height: 25vh; }
+.logo-wrapper .text { font-size: 75px; color: #fff; }
+.logo-wrapper h1 { color: white; }
+
+footer {
+  margin: 0 16px;
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  line-height: 30px;
+  margin-bottom: 20px;
+}
+
+footer > div {
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 15px;
+}
+
+footer a, footer span {
+  margin: 0 15px;
+  text-decoration: none;
+  color: #fff;
+  font-size: 15px;
+}
+
+footer a { cursor: pointer; }
+footer a:hover { text-decoration: underline; }
+
+.desc p { width: 560px; color: rgba(253, 253, 253, 0.514); }
+
+#sj-address {
+  background: none;
+  font-family: inherit;
+  padding: 0 17px;
+  height: 48px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: var(--text-color);
+  outline: none;
+  width: 350px;
+  margin-top: 5px;
+  border-radius: 50px;
+  color: #fff;
+  transition: border-radius 0.1s, border-color 0.2s, box-shadow 0.2s;
+}
+
+#sj-address:focus {
+  border: 1px solid rgba(253, 253, 253, 0.514);
+  border-radius: 6px;
+}
+
+.credit {
+  border-radius: 10px;
+  padding: 10px;
+  border: #fff 1px solid;
+  color: #fff;
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 15px;
+}
+.credit label { margin-left: auto; margin-right: 15px; }
+.credit a, .credit label { color: white; text-decoration: underline; text-align: right; }
+.credit pre { display: none; width: 100%; }
+.credit label::after { content: "show license"; cursor: pointer; }
+.credit input:checked + label::after { content: "hide license"; }
+.credit input:checked ~ pre { display: block; }
+
+/* ===== Minimal Black & White overrides (scoped to .bw) ===== */
+.bw {
+  background:#000; color:#fff;
+  font-family:"Courier New", ui-monospace, monospace;
+  display:block; /* neutralize body flex */
+  min-height:100vh;
+}
+
+.bw-wrap {
+  max-width:720px; margin:12vh auto 10vh; padding:0 16px;
+  display:flex; flex-direction:column; align-items:center; gap:18px;
+}
+
+.bw-header { text-align:center; }
+.bw-logo { width:72px; height:72px; object-fit:contain; filter:grayscale(1); }
+.bw-title { margin:8px 0 0; font-size:28px; font-weight:700; }
+.bw-sub { margin:6px 0 0; color:#ddd; font-size:12px; letter-spacing:.4px; }
+
+.bw-form {
+  width:100%;
+  display:flex; align-items:center; justify-content:center;
+  border:1px solid #fff; border-radius:6px; padding:10px 12px;
+}
+
+.bw-form #sj-address{
+  all:unset;           /* wipe legacy styles inside minimal form */
+  color:#fff; width:100%;
+  font:14px "Courier New", ui-monospace, monospace;
+  line-height:1.4;
+}
+
+.bw-form #sj-address::placeholder { color:#bbb; }
+.bw-form:focus-within { outline:2px solid #fff; outline-offset:2px; }
+
+.bw-errors { width:100%; }
+.bw #sj-error { color:#fff !important; }
+.bw #sj-error-code {
+  background:#000; color:#fff; border:1px solid #fff;
+  padding:8px; border-radius:4px; overflow:auto;
+}
+
+.bw-footer {
+  margin-top:16px; display:flex; gap:10px; align-items:center; flex-wrap:wrap;
+  color:#fff; font-size:13px; justify-content:center;
+}
+.bw-footer a { color:#fff; text-decoration:none; border-bottom:1px solid transparent; }
+.bw-footer a:hover { border-bottom-color:#fff; }
+.bw-copy { opacity:.9; }
+
+/* When Scramjet shows the frame, keep it pure B/W and full-viewport */
+.bw #sj-frame {
+  border:none; position:fixed; inset:0; width:100vw; height:100vh; background:#000;
+}
+
+/* Mobile tweaks */
+@media (max-width:640px){
+  .bw-wrap{ margin:10vh auto 8vh; }
+  .bw-title{ font-size:24px; }
+  .bw-form{ padding:14px 16px; }
+  .bw-form #sj-address{ font-size:16px; }
+}
