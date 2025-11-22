@@ -58,7 +58,7 @@
       to   { transform: translate3d(0, 30px, 0); }
     }
 
-    /* simple glass nav */
+    /* simple transparent nav */
     header {
       position: fixed;
       top: 0; left: 0; right: 0;
@@ -82,13 +82,13 @@
       height: 44px;
       border-radius: 999px;
       border: 1px solid rgba(148,163,184,0.5);
-      background: rgba(15,23,42,0.9);
+      background: transparent;              /* <- transparent now */
       backdrop-filter: blur(16px);
       display: flex;
       align-items: center;
       justify-content: space-between;
       padding: 0 12px;
-      box-shadow: 0 18px 40px rgba(15,23,42,0.9);
+      box-shadow: none;                     /* no big shadow blob */
       font-size: 11px;
       text-transform: uppercase;
       letter-spacing: 0.16em;
@@ -146,7 +146,7 @@
     .nav-btn {
       border-radius: 999px;
       border: 1px solid rgba(148,163,184,0.7);
-      background: rgba(15,23,42,0.95);
+      background: rgba(15,23,42,0.9);
       color: var(--fg);
       padding: 4px 10px;
       font-size: 10px;
@@ -158,6 +158,29 @@
     }
 
     .nav-btn:active {
+      transform: translateY(1px);
+    }
+
+    /* floating + button when header is hidden */
+    #header-toggle-show {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      z-index: 20;
+      border-radius: 999px;
+      border: 1px solid rgba(148,163,184,0.7);
+      background: rgba(15,23,42,0.9);
+      color: var(--fg);
+      padding: 6px 10px;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      display: none; /* only visible when header is hidden */
+      align-items: center;
+      justify-content: center;
+    }
+
+    #header-toggle-show:active {
       transform: translateY(1px);
     }
 
@@ -344,7 +367,7 @@
   <!-- WISP URL must be set BEFORE clients load -->
   <script>
     window.WISP_URL =
-      (location.protocol === "https:" ? "wss://" : "ws://") +
+      (location.protocol === "https:" ? "wss://" : "ws://" ) +
       location.host +
       "/wisp/";
   </script>
@@ -417,6 +440,9 @@
         const form = document.getElementById("sj-form");
         const input = document.getElementById("sj-address");
         const homeBtn = document.getElementById("nav-home-btn");
+        const hideBtn = document.getElementById("nav-hide-btn");
+        const showFab = document.getElementById("header-toggle-show");
+        const header = document.querySelector("header");
 
         if (form) {
           form.addEventListener("submit", function (e) {
@@ -429,6 +455,25 @@
           homeBtn.addEventListener("click", function () {
             showHome();
           });
+        }
+
+        if (hideBtn && showFab && header) {
+          hideBtn.addEventListener("click", function () {
+            header.style.display = "none";
+            showFab.style.display = "inline-flex";
+          });
+
+          showFab.addEventListener("click", function () {
+            header.style.display = "";
+            showFab.style.display = "inline-flex"; // prevent flash
+            // small delay so layout is stable then hide FAB
+            setTimeout(function () {
+              showFab.style.display = "none";
+            }, 0);
+          });
+
+          // ensure FAB is hidden on first load
+          showFab.style.display = "none";
         }
 
         if (input) input.focus();
@@ -453,10 +498,16 @@
           <button id="nav-home-btn" class="nav-btn">
             <span>⌂</span><span>Home</span>
           </button>
+          <button id="nav-hide-btn" class="nav-btn" title="Hide header">
+            <span>✕</span><span>Hide</span>
+          </button>
         </div>
       </div>
     </div>
   </header>
+
+  <!-- floating + button to bring header back -->
+  <button id="header-toggle-show" type="button">+</button>
 
   <main>
     <section id="home" class="home">
