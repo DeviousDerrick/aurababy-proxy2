@@ -3,13 +3,10 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Aurababy Pr0xy</title>
+  <title>Aurababy Pr0xy - Galaxy</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap"
-    rel="stylesheet"
-  />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
 
   <style>
     :root {
@@ -22,38 +19,127 @@
 
     html, body {
       height: 100%;
+      margin: 0;
+      padding: 0;
     }
 
     body {
-      margin: 0;
       font-family: "Poppins", system-ui, sans-serif;
-
-      /* default (dark) theme values */
-      --bg: #050816;
-      --panel: #020617;
-      --fg: #f9fafb;
-      --fg-dim: #9ca3af;
-      --border: #4b5563;
-      --accent: #ffffff;
-      --accent-text: #000000;
-
-      background: var(--bg);
-      color: var(--fg);
+      background: #0a0e27;
+      color: #f9fafb;
       overflow: hidden;
+      position: relative;
     }
 
-    /* LIGHT MODE – baby blue + soft panel */
-    body[data-theme="light"] {
-      --bg: #dbeafe;        /* baby blue */
-      --panel: #f9fafb;     /* soft white panel */
-      --fg: #020617;
-      --fg-dim: #4b5563;
-      --border: #bfdbfe;    /* light blue border */
-      --accent: #0f172a;    /* dark navy button */
-      --accent-text: #f9fafb;
+    /* Galaxy Background */
+    .galaxy-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(ellipse at top, #1e3a8a 0%, #0a0e27 50%, #050816 100%);
+      z-index: 0;
     }
 
-    /* top bar */
+    /* Animated Stars */
+    .stars {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .star {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      background: white;
+      border-radius: 50%;
+      animation: twinkle 3s infinite ease-in-out;
+    }
+
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.3; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.2); }
+    }
+
+    /* Floating Planets */
+    .planet {
+      position: fixed;
+      border-radius: 50%;
+      pointer-events: none;
+      animation: float 20s infinite ease-in-out;
+      box-shadow: 0 0 40px rgba(255, 255, 255, 0.3);
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0) translateX(0) rotate(0deg); }
+      25% { transform: translateY(-20px) translateX(10px) rotate(90deg); }
+      50% { transform: translateY(-10px) translateX(-10px) rotate(180deg); }
+      75% { transform: translateY(-30px) translateX(5px) rotate(270deg); }
+    }
+
+    .planet-1 {
+      width: 80px;
+      height: 80px;
+      background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+      top: 15%;
+      left: 10%;
+      animation-duration: 25s;
+      z-index: 1;
+    }
+
+    .planet-2 {
+      width: 120px;
+      height: 120px;
+      background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%);
+      top: 60%;
+      right: 8%;
+      animation-duration: 30s;
+      animation-delay: -5s;
+      z-index: 1;
+    }
+
+    .planet-3 {
+      width: 60px;
+      height: 60px;
+      background: linear-gradient(135deg, #ec4899 0%, #be185d 100%);
+      top: 25%;
+      right: 20%;
+      animation-duration: 22s;
+      animation-delay: -10s;
+      z-index: 1;
+    }
+
+    .planet-4 {
+      width: 90px;
+      height: 90px;
+      background: linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%);
+      bottom: 20%;
+      left: 15%;
+      animation-duration: 28s;
+      animation-delay: -15s;
+      z-index: 1;
+    }
+
+    /* Ring for planet 2 */
+    .planet-2::before {
+      content: '';
+      position: absolute;
+      width: 180px;
+      height: 40px;
+      border: 3px solid rgba(147, 197, 253, 0.4);
+      border-radius: 50%;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) rotateX(75deg);
+    }
+
+    /* Top bar */
     header {
       position: fixed;
       top: 0;
@@ -64,18 +150,20 @@
       align-items: center;
       justify-content: space-between;
       padding: 0 14px;
-      border-bottom: 1px solid var(--border);
-      background: var(--panel);
-      z-index: 3;
+      border-bottom: 1px solid rgba(147, 197, 253, 0.2);
+      background: rgba(10, 14, 39, 0.8);
+      backdrop-filter: blur(10px);
+      z-index: 10;
     }
 
     .brand {
       font-size: 14px;
       font-weight: 600;
+      color: #93c5fd;
     }
 
     .brand span {
-      color: var(--fg-dim);
+      color: #60a5fa;
       font-weight: 400;
       font-size: 12px;
       margin-left: 6px;
@@ -88,20 +176,26 @@
     }
 
     .btn-pill {
-      border: 1px solid var(--border);
-      background: var(--panel);
-      color: var(--fg);
+      border: 1px solid rgba(147, 197, 253, 0.3);
+      background: rgba(30, 58, 138, 0.4);
+      color: #e0e7ff;
       border-radius: 999px;
       padding: 4px 10px;
       font-size: 12px;
       cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .btn-pill:hover {
+      background: rgba(30, 58, 138, 0.6);
+      border-color: rgba(147, 197, 253, 0.5);
+      box-shadow: 0 0 15px rgba(147, 197, 253, 0.3);
     }
 
     .btn-pill:active {
       transform: translateY(1px);
     }
 
-    /* round icon button for theme */
     .btn-icon {
       width: 30px;
       height: 30px;
@@ -113,7 +207,7 @@
       font-size: 16px;
     }
 
-    /* center content */
+    /* Center content */
     main {
       position: relative;
       height: 100%;
@@ -121,7 +215,7 @@
       align-items: center;
       justify-content: center;
       padding: calc(var(--nav-h) + 12px) 12px 12px;
-      /* z-index removed so iframe can sit above */
+      z-index: 5;
     }
 
     #home {
@@ -131,33 +225,37 @@
     }
 
     .card {
-      background: var(--panel);
-      border-radius: 14px;
-      border: 1px solid var(--border);
+      background: rgba(15, 23, 42, 0.7);
+      border-radius: 20px;
+      border: 1px solid rgba(147, 197, 253, 0.3);
       padding: 20px 16px 16px;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), 0 0 60px rgba(59, 130, 246, 0.2);
     }
 
-    /* simple christmas strip */
     .xmas-strip {
-      font-size: 12px;
-      color: var(--fg-dim);
+      font-size: 18px;
       margin-bottom: 10px;
       letter-spacing: 0.08em;
     }
     .xmas-strip span {
-      margin: 0 2px;
+      margin: 0 4px;
     }
 
     h1 {
       margin: 0 0 6px;
-      font-size: 22px;
+      font-size: 28px;
       font-weight: 700;
+      background: linear-gradient(135deg, #93c5fd 0%, #60a5fa 50%, #3b82f6 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
 
     .sub {
       margin: 0 0 18px;
       font-size: 12px;
-      color: var(--fg-dim);
+      color: #93c5fd;
     }
 
     .bar {
@@ -165,14 +263,21 @@
       align-items: center;
       gap: 8px;
       border-radius: 999px;
-      border: 1px solid var(--border);
+      border: 1px solid rgba(147, 197, 253, 0.3);
       padding: 4px 4px 4px 12px;
-      background: var(--panel);
+      background: rgba(30, 58, 138, 0.3);
+      backdrop-filter: blur(5px);
+      transition: all 0.3s ease;
+    }
+
+    .bar:focus-within {
+      border-color: rgba(147, 197, 253, 0.6);
+      box-shadow: 0 0 20px rgba(59, 130, 246, 0.4);
     }
 
     .prefix {
       font-size: 11px;
-      color: var(--fg-dim);
+      color: #93c5fd;
       white-space: nowrap;
     }
 
@@ -194,12 +299,12 @@
       border: none;
       outline: none;
       background: transparent;
-      color: var(--fg);
+      color: #e0e7ff;
       font: 13px/1.3 "Poppins", system-ui, sans-serif;
     }
 
     #sj-address::placeholder {
-      color: var(--fg-dim);
+      color: #60a5fa;
     }
 
     .go-btn {
@@ -209,8 +314,14 @@
       font-size: 12px;
       font-weight: 600;
       cursor: pointer;
-      background: var(--accent);
-      color: var(--accent-text);
+      background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+      color: white;
+      transition: all 0.3s ease;
+    }
+
+    .go-btn:hover {
+      background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+      box-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
     }
 
     .go-btn:active {
@@ -220,7 +331,7 @@
     .foot {
       margin-top: 10px;
       font-size: 11px;
-      color: var(--fg-dim);
+      color: #60a5fa;
     }
 
     /* iframe surface */
@@ -235,7 +346,7 @@
       border: none;
       display: none;
       background: #000;
-      z-index: 2; /* <-- above main, below header */
+      z-index: 9;
     }
 
     #sj-error,
@@ -248,12 +359,14 @@
     }
 
     @media (max-width: 480px) {
-      h1 { font-size: 18px; }
+      h1 { font-size: 22px; }
       .card { padding: 16px 12px 12px; }
+      .planet-1, .planet-2, .planet-3, .planet-4 {
+        transform: scale(0.7);
+      }
     }
   </style>
 
-  <!-- WISP URL must be set BEFORE clients load -->
   <script>
     window.WISP_URL =
       (location.protocol === "https:" ? "wss://" : "ws://" ) +
@@ -261,7 +374,6 @@
       "/wisp/";
   </script>
 
-  <!-- Scramjet / Wisp runtime – keep these -->
   <script src="/scram/scramjet.all.js"></script>
   <script src="/baremux/index.js" defer></script>
   <script src="/epoxy/index.js" defer></script>
@@ -325,11 +437,26 @@
       }
       window.go = go;
 
+      // Generate stars
+      function createStars() {
+        const starsContainer = document.querySelector('.stars');
+        for (let i = 0; i < 200; i++) {
+          const star = document.createElement('div');
+          star.className = 'star';
+          star.style.left = Math.random() * 100 + '%';
+          star.style.top = Math.random() * 100 + '%';
+          star.style.animationDelay = Math.random() * 3 + 's';
+          star.style.animationDuration = (Math.random() * 2 + 2) + 's';
+          starsContainer.appendChild(star);
+        }
+      }
+
       window.addEventListener("DOMContentLoaded", function () {
+        createStars();
+
         const form = document.getElementById("sj-form");
         const input = document.getElementById("sj-address");
         const homeBtn = document.getElementById("home-btn");
-        const themeToggle = document.getElementById("theme-toggle");
 
         if (form) {
           form.addEventListener("submit", function (e) {
@@ -345,49 +472,27 @@
         }
 
         if (input) input.focus();
-
-        // THEME TOGGLE (moon / sun)
-        if (themeToggle) {
-          function setTheme(theme) {
-            document.body.setAttribute("data-theme", theme);
-            localStorage.setItem("aurababy-theme", theme);
-            // ☾ for dark, ☼ for light
-            themeToggle.textContent = theme === "dark" ? "☾" : "☼";
-          }
-
-          const saved =
-            localStorage.getItem("aurababy-theme") || "dark";
-          setTheme(saved);
-
-          themeToggle.addEventListener("click", function () {
-            const current =
-              document.body.getAttribute("data-theme") || "dark";
-            const next = current === "dark" ? "light" : "dark";
-            setTheme(next);
-          });
-        }
       });
     })();
   </script>
 </head>
 
-<body data-theme="dark">
+<body>
+  <div class="galaxy-bg"></div>
+  <div class="stars"></div>
+  
+  <div class="planet planet-1"></div>
+  <div class="planet planet-2"></div>
+  <div class="planet planet-3"></div>
+  <div class="planet planet-4"></div>
+
   <header>
     <div class="brand">
       Aurababy Pr0xy
-      <span>Scramjet</span>
+      <span>Galaxy Edition</span>
     </div>
     <div class="header-actions">
-      <button
-        id="theme-toggle"
-        type="button"
-        class="btn-pill btn-icon"
-        aria-label="Toggle theme"
-        title="Toggle theme"
-      >
-        ☾
-      </button>
-      <button id="home-btn" type="button" class="btn-pill">Home</button>
+      <button id="home-btn" type="button" class="btn-pill">🏠 Home</button>
     </div>
   </header>
 
@@ -395,20 +500,19 @@
     <section id="home">
       <div class="card">
         <div class="xmas-strip">
-          <span>🎄</span><span>❄</span><span>🎁</span><span>❄</span><span>🎄</span>
+          <span>🌟</span><span>🪐</span><span>✨</span><span>🌙</span><span>⭐</span>
         </div>
 
         <h1>Aurababy Pr0xy</h1>
-        <p class="sub">1.0</p>
+        <p class="sub">Galaxy Edition v1.0</p>
 
         <div class="bar">
           <div class="prefix">
-            <span>⭢</span><span>Proxy</span>
+            <span>🚀</span><span>Proxy</span>
           </div>
 
           <div class="bar-input">
             <form id="sj-form" autocomplete="off">
-              <!-- keep this so search.js has its engine value -->
               <input
                 id="sj-search-engine"
                 type="hidden"
@@ -417,7 +521,7 @@
               <input
                 id="sj-address"
                 type="text"
-                placeholder="google.com or search..."
+                placeholder="Explore the web galaxy..."
                 spellcheck="false"
                 inputmode="url"
               />
@@ -429,21 +533,19 @@
             type="button"
             onclick="go(document.getElementById('sj-address').value)"
           >
-            Go
+            Launch
           </button>
         </div>
 
         <p class="sub foot">
-          Powered by Scramjet / Wisp · Made by TRINITY
+          Powered by Scramjet / Wisp · Exploring the cosmos 🌌
         </p>
       </div>
     </section>
   </main>
 
-  <!-- Scramjet surface -->
   <iframe id="sj-frame"></iframe>
 
-  <!-- Error hooks for your other JS -->
   <p id="sj-error"></p>
   <pre id="sj-error-code"></pre>
 </body>
