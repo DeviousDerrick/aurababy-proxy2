@@ -1,14 +1,23 @@
 {
-  "name": "scramjet-vercel-proxy",
+  "name": "scramjet-demo",
   "version": "2.0.0",
-  "description": "Scramjet proxy for Vercel",
+  "description": "The demo application for Scramjet, a high-performance web proxy.",
   "type": "module",
   "engines": {
-    "node": "24.x"
+    "npm": ">=7.0.0",
+    "node": ">=16.0.0"
   },
   "scripts": {
-    "start": "node src/index.js"
+    "start": "node src/index.js",
+    "format": "prettier --config .prettierrc.js --write .",
+    "lint": "eslint ./src/",
+    "lint:fix": "eslint ./src/ --fix"
   },
+  "keywords": [
+    "proxy"
+  ],
+  "author": "Mercury Workshop",
+  "license": "GNU AFFERO",
   "dependencies": {
     "@fastify/static": "^8.2.0",
     "@mercuryworkshop/bare-mux": "^2.1.7",
@@ -16,6 +25,13 @@
     "@mercuryworkshop/scramjet": "https://github.com/MercuryWorkshop/scramjet/releases/download/latest/mercuryworkshop-scramjet-2.0.0-alpha.tgz",
     "@mercuryworkshop/wisp-js": "^0.3.3",
     "fastify": "^5.4.0",
-    "ws": "^8.18.3"
-  }
+    "ws": "^8.18.3",
+    "@tomphttp/bare-server-node": "^1.0.0",
+    "express": "^4.19.0"
+  },
+  "devDependencies": {
+    "eslint": "^9.13.0",
+    "prettier": "^3.3.3"
+  },
+  "packageManager": "pnpm@9.12.2"
 }
