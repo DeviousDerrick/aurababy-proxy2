@@ -1,0 +1,40 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "src/index.js",
+      "use": "@vercel/node"
+    },
+    {
+      "src": "public/**",
+      "use": "@vercel/static"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*\\.(js|css|html|png|jpg|jpeg|gif|svg|ico|wasm))",
+      "dest": "/public/$1"
+    },
+    {
+      "src": "/scram/(.*)",
+      "dest": "/node_modules/@mercuryworkshop/scramjet/$1"
+    },
+    {
+      "src": "/epoxy/(.*)",
+      "dest": "/node_modules/@mercuryworkshop/epoxy-transport/$1"
+    },
+    {
+      "src": "/baremux/(.*)",
+      "dest": "/node_modules/@mercuryworkshop/bare-mux/$1"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/src/index.js"
+    }
+  ],
+  "functions": {
+    "src/index.js": {
+      "maxDuration": 60
+    }
+  }
+}
