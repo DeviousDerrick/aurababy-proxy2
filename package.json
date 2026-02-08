@@ -19,3 +19,13 @@
     "ws": "^8.18.3"
   }
 }
+```
+
+## Step 3: Create `.vercelignore` in ROOT
+```
+src/
+server.js
+.replit
+replit.nix
+docker-compose
+Dockerfile
