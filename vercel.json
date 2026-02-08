@@ -1,9 +1,24 @@
 {
   "version": 2,
-  "rewrites": [
-    { "source": "/scram/:path*", "destination": "/node_modules/@mercuryworkshop/scramjet/:path*" },
-    { "source": "/epoxy/:path*", "destination": "/node_modules/@mercuryworkshop/epoxy-transport/:path*" },
-    { "source": "/baremux/:path*", "destination": "/node_modules/@mercuryworkshop/bare-mux/:path*" },
-    { "source": "/:path*", "destination": "/public/:path*" }
+  "buildCommand": "npm install",
+  "outputDirectory": "public",
+  "installCommand": "npm install --production=false",
+  "routes": [
+    {
+      "src": "/scram/(.*)",
+      "dest": "/node_modules/@mercuryworkshop/scramjet/$1"
+    },
+    {
+      "src": "/epoxy/(.*)",
+      "dest": "/node_modules/@mercuryworkshop/epoxy-transport/dist/$1"
+    },
+    {
+      "src": "/baremux/(.*)",
+      "dest": "/node_modules/@mercuryworkshop/bare-mux/dist/$1"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/public/$1"
+    }
   ]
 }
