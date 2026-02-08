@@ -19,3 +19,13 @@
     "ws": "^8.18.3"
   }
 }
+```
+
+---
+
+## 3. Create `.gitignore`
+```
+node_modules
+.DS_Store
+.env
+.vercel
