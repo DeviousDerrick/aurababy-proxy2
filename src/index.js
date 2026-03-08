@@ -65,16 +65,7 @@ fastify.setNotFoundHandler((req, reply) => {
   return reply.code(404).type('text/html').sendFile('404.html');
 });
 
-fastify.server.on("listening", () => {
-  const address = fastify.server.address();
-  console.log("Listening on:");
-  console.log(`\thttp://localhost:${address.port}`);
-  console.log(`\thttp://${hostname()}:${address.port}`);
-  console.log(
-    `\thttp://${address.family === "IPv6" ? `[${address.address}]` : address.address}:${address.port}`
-  );
-});
-
+// Graceful shutdown
 process.on("SIGINT", shutdown);
 process.on("SIGTERM", shutdown);
 
@@ -84,10 +75,21 @@ function shutdown() {
   process.exit(0);
 }
 
-let port = parseInt(process.env.PORT || "");
-if (isNaN(port)) port = 8080;
+// Port handling
+const port = process.env.PORT || 8080;
 
-fastify.listen({
-  port: port,
-  host: "0.0.0.0",
-});
+fastify.listen({ port: port, host: "0.0.0.0" })
+  .then(() => {
+    const address = fastify.server.address();
+    console.log("Server started on port", port);
+    console.log("Listening on:");
+    console.log(`\thttp://localhost:${port}`);
+    console.log(`\thttp://${hostname()}:${port}`);
+    console.log(
+      `\thttp://${address.family === "IPv6" ? `[${address.address}]` : address.address}:${port}`
+    );
+  })
+  .catch((err) => {
+    console.error("Error starting server:", err);
+    process.exit(1);
+  });
