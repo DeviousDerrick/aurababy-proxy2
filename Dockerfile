@@ -1,26 +1,29 @@
-# Use a lightweight Node image
+# Base Node image
 FROM node:18-alpine
 
-# Set environment variables
+# Set environment
 ENV NODE_ENV=production
 ENV PORT=8080
 
-# Set working directory
+# Working directory
 WORKDIR /app
 
 # Install pnpm globally
 RUN npm install -g pnpm@9.12.2
 
+# Install system build tools (needed for some npm modules)
+RUN apk add --no-cache python3 make g++
+
 # Copy package files
 COPY package*.json ./
 
-# Install dependencies (ignore frozen-lockfile to avoid build errors)
+# Install dependencies ignoring frozen lockfile
 RUN pnpm install --no-frozen-lockfile
 
 # Copy the rest of the app
 COPY . .
 
-# Expose the port (matches your index.js)
+# Expose port
 EXPOSE 8080
 
 # Start the app
