@@ -377,35 +377,12 @@
   <script src="/scram/scramjet.all.js"></script>
   <script src="/baremux/index.js" defer></script>
   <script src="/epoxy/index.js" defer></script>
-  <script src="https://unpkg.com/wisp-js/dist/wisp.min.js" defer></script>
   <script src="register-sw.js" defer></script>
   <script src="search.js" defer></script>
   <script src="index.js" defer></script>
 
   <script>
     (function () {
-      function prox(u) {
-        try {
-          return location.origin + "/scramjet/" + encodeURIComponent(u);
-        } catch {
-          return u;
-        }
-      }
-
-      function normalizeInput(q) {
-        q = (q || "").trim();
-        if (!q) return "";
-        const hasScheme = /^[a-z][a-z0-9+.-]*:\/\//i.test(q);
-        const hasDot = q.includes(".");
-        if (!hasScheme && !hasDot) {
-          return "https://www.google.com/search?q=" + encodeURIComponent(q);
-        }
-        if (!hasScheme && hasDot) {
-          return "https://" + q;
-        }
-        return q.replace(/^http:\/\//i, "https://");
-      }
-
       function showHome() {
         const home = document.getElementById("home");
         const frame = document.getElementById("sj-frame");
@@ -418,28 +395,20 @@
         if (input) input.value = "";
       }
 
-      function showFrame(url) {
-        const home = document.getElementById("home");
-        const frame = document.getElementById("sj-frame");
-        if (home) home.classList.add("home-hidden");
-        if (frame) {
-          frame.src = prox(url);
-          frame.style.display = "block";
-        }
+      // Fixed go() — delegates to the real form submit in index.js
+      // so BareMux transport gets properly initialized first
+      function go(raw) {
+        const input = document.getElementById("sj-address");
+        if (input && raw) input.value = raw;
+        const form = document.getElementById("sj-form");
+        if (form) form.dispatchEvent(new Event("submit", { bubbles: true, cancelable: true }));
       }
-
-    function go(raw) {
-  const input = document.getElementById("sj-address");
-  if (input && raw) input.value = raw;
-  // Trigger the real form submit which sets up the transport
-  const form = document.getElementById("sj-form");
-  if (form) form.dispatchEvent(new Event("submit", { bubbles: true, cancelable: true }));
-}
-window.go = go;
+      window.go = go;
 
       // Generate stars
       function createStars() {
         const starsContainer = document.querySelector('.stars');
+        if (!starsContainer) return;
         for (let i = 0; i < 200; i++) {
           const star = document.createElement('div');
           star.className = 'star';
@@ -454,23 +423,14 @@ window.go = go;
       window.addEventListener("DOMContentLoaded", function () {
         createStars();
 
-        const form = document.getElementById("sj-form");
-        const input = document.getElementById("sj-address");
         const homeBtn = document.getElementById("home-btn");
-
-        if (form) {
-          form.addEventListener("submit", function (e) {
-            e.preventDefault();
-            go(input && input.value);
-          });
-        }
-
         if (homeBtn) {
           homeBtn.addEventListener("click", function () {
             showHome();
           });
         }
 
+        const input = document.getElementById("sj-address");
         if (input) input.focus();
       });
     })();
@@ -504,7 +464,7 @@ window.go = go;
         </div>
 
         <h1>Aurababy Pr0xy</h1>
-        <p class="sub">Galaxy Edition v1.0</p>
+        <p class="sub">Galaxy Edition v1.02</p>
 
         <div class="bar">
           <div class="prefix">
@@ -513,10 +473,11 @@ window.go = go;
 
           <div class="bar-input">
             <form id="sj-form" autocomplete="off">
+              <!-- Changed from Google to Brave Search to avoid bot detection -->
               <input
                 id="sj-search-engine"
                 type="hidden"
-                value="https://www.google.com/search?q=%s"
+                value="https://search.brave.com/search?q=%s"
               />
               <input
                 id="sj-address"
