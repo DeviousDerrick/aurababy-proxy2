@@ -428,14 +428,14 @@
         }
       }
 
-      function go(raw) {
-        const normalized = normalizeInput(raw || "");
-        if (!normalized) return;
-        const input = document.getElementById("sj-address");
-        if (input) input.value = normalized;
-        showFrame(normalized);
-      }
-      window.go = go;
+    function go(raw) {
+  const input = document.getElementById("sj-address");
+  if (input && raw) input.value = raw;
+  // Trigger the real form submit which sets up the transport
+  const form = document.getElementById("sj-form");
+  if (form) form.dispatchEvent(new Event("submit", { bubbles: true, cancelable: true }));
+}
+window.go = go;
 
       // Generate stars
       function createStars() {
